@@ -39,7 +39,7 @@ jobs:
 
       - name: Checkout and Update Kustomization File
         run: |
-          git clone https://x-access-token:${{ secrets.MANIFESTS_REPO_TOKEN }}@github.com/SunBha/preview-env-manifests.git preview-env-manifests
+          git clone https://x-access-token:${{ secrets.MANIFESTS_REPO_TOKEN }}@github.com/SunBha/gitops-preview-env.git preview-env-manifests
           cd preview-env-manifests/kustomize-preview-app
           if [ -f "kustomization.yaml" ]; then
             echo "✅ Found kustomization.yaml, updating..."
