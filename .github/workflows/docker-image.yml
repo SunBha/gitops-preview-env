@@ -45,7 +45,7 @@ jobs:
           cd preview-env-manifests
           
           # Create and checkout a new branch for the PR
-          git checkout -b preview-pr-${{ env.PR_NUMBER }}
+          git checkout -b preview-pr-${{ env.PR_NUMBER }} || git checkout preview-pr-${{ env.PR_NUMBER }}
           
           # Update the kustomization file
           cd kustomize-preview-app
@@ -62,4 +62,4 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add kustomization.yaml
           git commit -m "Update image tag to ${SHORT_SHA} for PR-${PR_NUMBER}"
-          git push origin preview-pr-${{ env.PR_NUMBER }}
+          git push -f origin preview-pr-${{ env.PR_NUMBER }}
