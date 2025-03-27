@@ -6,6 +6,11 @@ on:
     branches:
       - main
 
+# Add permissions block
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
   build:
     name: Build Docker Image
