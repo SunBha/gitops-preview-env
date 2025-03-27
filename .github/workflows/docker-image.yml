@@ -21,6 +21,7 @@ jobs:
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           
           echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+          echo "PR_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
           echo "this is PR - $PR_NUMBER"
 
       - name: Log in to Docker Hub
@@ -37,10 +38,17 @@ jobs:
           push: true
           tags: bhatiasunny/my-preview-app:${{ env.SHORT_SHA }}
 
-      - name: Checkout and Update Kustomization File
+      - name: Update Kustomization File in PR Branch
         run: |
+          # Clone the manifests repository
           git clone https://x-access-token:${{ secrets.MANIFESTS_REPO_TOKEN }}@github.com/SunBha/gitops-preview-env.git preview-env-manifests
-          cd preview-env-manifests/kustomize-preview-app
+          cd preview-env-manifests
+          
+          # Create and checkout a new branch for the PR
+          git checkout -b preview-pr-${{ env.PR_NUMBER }}
+          
+          # Update the kustomization file
+          cd kustomize-preview-app
           if [ -f "kustomization.yaml" ]; then
             echo "✅ Found kustomization.yaml, updating..."
             sed -i "s|newTag:.*|newTag: ${SHORT_SHA}|" kustomization.yaml
@@ -49,7 +57,9 @@ jobs:
             exit 1
           fi
 
+          # Commit and push changes
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git commit -am "Update image tag to ${SHORT_SHA} for PR-${PR_NUMBER}"
-          git push
+          git add kustomization.yaml
+          git commit -m "Update image tag to ${SHORT_SHA} for PR-${PR_NUMBER}"
+          git push origin preview-pr-${{ env.PR_NUMBER }}
