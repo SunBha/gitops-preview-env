@@ -22,7 +22,7 @@ spec:
       name: 'myapp-pr-{{.number}}'
     spec:
       source:
-        repoURL: 'https://github.com/SunBha/preview-env-manifests.git'
+        repoURL: 'https://github.com/SunBha/gitops-preview-env.git'
         targetRevision: 'preview-pr-{{.number}}'
         path: kustomize-preview-app/ 
         kustomize:
