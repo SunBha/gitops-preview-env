@@ -68,6 +68,7 @@ jobs:
           if [ -f "kustomization.yaml" ]; then
             echo "✅ Found kustomization.yaml, updating..."
             sed -i "s|newTag:.*|newTag: ${SHORT_SHA}|" kustomization.yaml
+            echo "Updated image tag to: ${SHORT_SHA}"
           else
             echo "❌ ERROR: kustomization.yaml not found!"
             exit 1
@@ -79,3 +80,7 @@ jobs:
           git add kustomization.yaml
           git commit -m "Update image tag to ${SHORT_SHA} for PR-${PR_NUMBER}"
           git push -f origin preview-pr-${{ env.PR_NUMBER }}
+          
+          # Print the branch and tag for debugging
+          echo "Updated branch: preview-pr-${{ env.PR_NUMBER }}"
+          echo "Updated tag: ${SHORT_SHA}"
