@@ -20,11 +20,13 @@ spec:
   template:
     metadata:
       name: 'myapp-pr-{{.number}}'
+      labels:
+        preview: "true"
     spec:
       source:
         repoURL: 'https://github.com/SunBha/gitops-preview-env.git'
         targetRevision: 'preview-pr-{{.number}}'
-        path: kustomize-preview-app/ 
+        path: kustomize-preview-app/
         kustomize:
           images:
             - 'docker.io/bhatiasunny/my-preview-app:{{.head_short_sha_7}}'
