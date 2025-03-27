@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: myapps
+  name: preview-apps
   namespace: argocd  
 spec:
   goTemplate: true
@@ -9,8 +9,8 @@ spec:
   generators:
   - pullRequest:
       github:
-        owner: sunbha
-        repo: preview-env-source-code
+        owner: SunBha
+        repo: gitops-preview-env
       tokenRef:
         secretName: argocd-token
         key: token
