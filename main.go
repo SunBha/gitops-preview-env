@@ -55,6 +55,7 @@ func (g *gitInformation) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<h2>I am an application inside a preview environment<h2> <h3>My properties are:</h3><ul>")
 	fmt.Fprintf(w, "<li>branch: "+g.branch+"</li>")
 	fmt.Fprintf(w, "<li>git hash: "+g.hash+"</li>")
-	fmt.Fprintf(w, "</ol>")
+	fmt.Fprintf(w, "<li>feature: New preview environment demo</li>")
+	fmt.Fprintf(w, "</ul>")
 
 }
