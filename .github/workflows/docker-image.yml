@@ -15,7 +15,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # echo "PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
       - name: Set Environment Variables
         run: |
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
