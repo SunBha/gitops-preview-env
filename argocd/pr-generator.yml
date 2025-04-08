@@ -9,21 +9,19 @@ spec:
   generators:
   - pullRequest:
       github:
-        owner: sunbha
-        repo: preview-env-source-code
-      tokenRef:
-        secretName: argocd-token
-        key: token
-      labels:
-        - preview
+        owner: SunBha
+        repo: gitops-preview-env
+        tokenRef:
+          secretName: argocd-token
+          key: token
       requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'myapp-pr-{{.number}}'
+      name: 'preview-env-{{.number}}'
     spec:
       source:
         repoURL: 'https://github.com/SunBha/gitops-preview-env.git'
-        targetRevision: 'preview-pr-{{.number}}'
+        targetRevision: '{{.head_sha}}'
         path: kustomize-preview-app/ 
         kustomize:
           images:
